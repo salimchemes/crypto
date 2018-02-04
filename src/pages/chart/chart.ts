@@ -31,7 +31,6 @@ export class ChartPage {
       console.log(result.Data);
       let days = [];
       let prices = [];
-      debugger
       result.Data.forEach(price => {
         days.push(moment.unix(price['time']).format("L"));
         prices.push(price['close'])
