@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
-import { HoldingsProvider } from '../../providers/holdings/holdings'; 
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { HoldingsProvider } from '../../providers/holdings/holdings';
 import { HelperProvider } from '../../providers/helper/helper';
- 
+import { isUndefined } from 'ionic-angular/util/util';
+
 @IonicPage({
     defaultHistory: ['HomePage']
 })
@@ -11,46 +12,63 @@ import { HelperProvider } from '../../providers/helper/helper';
     templateUrl: 'add-holding.html'
 })
 export class AddHoldingPage {
- 
+
     private cryptoUnavailable: boolean = false;
     private checkingValidity: boolean = false;
     private cryptoCode: string;
+    private id: string;
     private displayCurrency: string;
     private amountHolding;
- 
-    constructor(private navCtrl: NavController, private holdingsProvider: HoldingsProvider, private helper: HelperProvider) {
- 
+    private actionText: string = 'Add Holding';
+    private isUpdate: boolean = false;
+
+    constructor(private navCtrl: NavController,
+        private holdingsProvider: HoldingsProvider,
+        private helper: HelperProvider,
+        public navParams: NavParams) {
+        let holdingParam = this.navParams.get("holding");
+        debugger
+        if (holdingParam != null) {
+            this.id = holdingParam.id;
+            this.cryptoCode = holdingParam.crypto;
+            this.displayCurrency = holdingParam.currency;
+            this.amountHolding = holdingParam.amount;
+            this.actionText = 'Update Holding';
+            this.isUpdate = true;
+        }
+
     }
- 
+
     addHolding(): void {
- 
+
         this.cryptoUnavailable = false;
         this.checkingValidity = true;
- 
+
         let holding = {
-            id: this.helper.newGuid(),
+            isUpdate: this.isUpdate,
+            id: this.id ? this.id : this.helper.newGuid(),
             crypto: this.cryptoCode,
             currency: this.displayCurrency,
             amount: this.amountHolding || 0
         };
- 
+
+        debugger
         this.holdingsProvider.verifyHolding(holding).subscribe((result) => {
- 
+
             this.checkingValidity = false;
- 
-            if(result.success){
+
+            if (result.success) {
                 this.holdingsProvider.addHolding(holding);
                 this.navCtrl.pop();
             } else {
                 this.cryptoUnavailable = true;
             }
- 
-        }, (err) => {   
- 
+
+        }, (err) => {
+
             this.checkingValidity = false;
- 
+
         });
     }
- 
+
 }
- 

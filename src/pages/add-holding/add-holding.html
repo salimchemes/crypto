@@ -1,7 +1,7 @@
 <ion-header>
 
     <ion-navbar color="primary">
-        <ion-title>Add Holding</ion-title>
+        <ion-title>{{actionText}}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -29,6 +29,7 @@
                 <ion-option value="btc">BTC</ion-option>
                 <ion-option value="ltc">LTC</ion-option>
                 <ion-option value="eth">ETH</ion-option>
+                <ion-option value="xrp">XRP</ion-option>
             </ion-select>
         </ion-item>
 
@@ -48,7 +49,7 @@
 
     </ion-list>
 
-    <button ion-button full (click)="addHolding()" [disabled]="checkingValidity">Add Holding
+    <button ion-button full (click)="addHolding()" [disabled]="checkingValidity">{{actionText}}
         <ion-spinner *ngIf="checkingValidity"></ion-spinner>
     </button>
 
