@@ -51,7 +51,6 @@ export class AddHoldingPage {
             amount: this.amountHolding || 0
         };
 
-        debugger
         this.holdingsProvider.verifyHolding(holding).subscribe((result) => {
 
             this.checkingValidity = false;

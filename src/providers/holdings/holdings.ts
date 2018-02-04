@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs/observable/forkJoin'; 
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 interface Holding {
     id: string,
@@ -22,16 +22,15 @@ export class HoldingsProvider {
 
     }
 
-    addHolding(holding: Holding): void {  
+    addHolding(holding: Holding): void {
         if (holding.isUpdate)
             this.holdings.forEach(x => {
-                if (x.id = holding.id)
-                    {
-                        x.crypto = holding.crypto,
+                if (x.id = holding.id) {
+                    x.crypto = holding.crypto,
                         x.currency = holding.currency,
                         x.value = holding.value,
                         x.amount = holding.amount
-                    } 
+                }
             })
         else
             this.holdings.push(holding);
@@ -54,7 +53,7 @@ export class HoldingsProvider {
 
     loadHoldings(): void {
 
-        this.storage.get('cryptoHoldings').then(holdings => { 
+        this.storage.get('cryptoHoldings').then(holdings => {
             if (holdings !== null) {
                 this.holdings = holdings;
                 this.fetchPrices();
@@ -103,4 +102,7 @@ export class HoldingsProvider {
 
     }
 
+    fetchLast30Days(holding): Observable<any> {
+        return this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym=' + holding.crypto.toUpperCase() + '&tsym=' + holding.currency.toUpperCase() + '&limit=30&aggregate=1');
+    }
 }

@@ -34,4 +34,8 @@ export class HomePage {
         console.log(holding);
     }
 
+    viewChart(holding) {
+        this.navCtrl.push('ChartPage', { holding: holding });
+    }
+
 }
