@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HoldingsProvider } from '../../providers/holdings/holdings';
-import { HelperProvider } from '../../providers/helper/helper';
-import { isUndefined } from 'ionic-angular/util/util';
+import { HelperProvider } from '../../providers/helper/helper'; 
 
 @IonicPage({
     defaultHistory: ['HomePage']

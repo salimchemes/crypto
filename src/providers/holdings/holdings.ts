@@ -54,8 +54,7 @@ export class HoldingsProvider {
 
     loadHoldings(): void {
 
-        this.storage.get('cryptoHoldings').then(holdings => {
-            debugger
+        this.storage.get('cryptoHoldings').then(holdings => { 
             if (holdings !== null) {
                 this.holdings = holdings;
                 this.fetchPrices();
@@ -84,7 +83,7 @@ export class HoldingsProvider {
 
             results.forEach((result: any, index) => {
 
-                this.holdings[index].value = result.ticker.price;
+                this.holdings[index].value = Math.round(result.ticker.price * 100) / 100;
 
             });
 
