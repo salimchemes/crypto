@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HoldingsProvider } from '../../providers/holdings/holdings';
+import { LoadingProvider } from '../../providers/loading/loading';
 import { Chart } from 'chart.js';
 import moment from 'moment';
 /**
@@ -17,10 +18,12 @@ import moment from 'moment';
 })
 export class ChartPage {
   @ViewChild('lineCanvas') lineCanvas;
-  private holding: {};
+  private holding: {}; 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private holdingProvider: HoldingsProvider) {
+    private holdingProvider: HoldingsProvider,
+    private loading: LoadingProvider) {
+    this.loading.show("Loading...");
     if (this.navParams.get('holding'))
       this.holding = this.navParams.get('holding');
 
@@ -29,10 +32,10 @@ export class ChartPage {
       let days = [];
       let prices = [];
       debugger
-      result.Data.forEach(price => { 
+      result.Data.forEach(price => {
         days.push(moment.unix(price['time']).format("L"));
         prices.push(price['close'])
-        
+
       });
       new Chart(this.lineCanvas.nativeElement, {
         type: 'line',
@@ -64,10 +67,10 @@ export class ChartPage {
           ]
         },
         options: {
-    
-        }
-      });
 
+        }
+      }); 
+      this.loading.dismiss();
     });
   }
 

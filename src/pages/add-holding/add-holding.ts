@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HoldingsProvider } from '../../providers/holdings/holdings';
-import { HelperProvider } from '../../providers/helper/helper'; 
+import { HelperProvider } from '../../providers/helper/helper';
+import { LoadingProvider } from '../../providers/loading/loading';
 
 @IonicPage({
     defaultHistory: ['HomePage']
@@ -24,9 +25,10 @@ export class AddHoldingPage {
     constructor(private navCtrl: NavController,
         private holdingsProvider: HoldingsProvider,
         private helper: HelperProvider,
-        public navParams: NavParams) {
+        public navParams: NavParams,
+        private loading: LoadingProvider) {
+        this.loading.show('Loading...');
         let holdingParam = this.navParams.get("holding");
-        debugger
         if (holdingParam != null) {
             this.id = holdingParam.id;
             this.cryptoCode = holdingParam.crypto;
@@ -35,11 +37,11 @@ export class AddHoldingPage {
             this.actionText = 'Update Holding';
             this.isUpdate = true;
         }
-
+        this.loading.dismiss();
     }
 
     addHolding(): void {
-
+        this.loading.show('Loading...');
         this.cryptoUnavailable = false;
         this.checkingValidity = true;
 
@@ -57,15 +59,16 @@ export class AddHoldingPage {
 
             if (result.success) {
                 this.holdingsProvider.addHolding(holding);
+                this.loading.dismiss();
                 this.navCtrl.pop();
             } else {
                 this.cryptoUnavailable = true;
+                this.loading.dismiss();
             }
 
         }, (err) => {
-
+            this.loading.dismiss();
             this.checkingValidity = false;
-
         });
     }
 
