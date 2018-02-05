@@ -105,4 +105,9 @@ export class HoldingsProvider {
     fetchLast30Days(holding): Observable<any> {
         return this.http.get('https://min-api.cryptocompare.com/data/histoday?fsym=' + holding.crypto.toUpperCase() + '&tsym=' + holding.currency.toUpperCase() + '&limit=30&aggregate=1');
     }
+    
+    fetchLast12Hs(holding): Observable<any> {
+        return this.http.get('https://min-api.cryptocompare.com/data/histohour?fsym=' + holding.crypto.toUpperCase() + '&tsym=' + holding.currency.toUpperCase() + '&limit=30&aggregate=1');
+    }
+
 }
