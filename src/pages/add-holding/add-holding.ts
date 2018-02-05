@@ -30,8 +30,7 @@ export class AddHoldingPage {
         private loading: LoadingProvider) {
         this.loading.show('Loading...');
         this.holdingParam = this.navParams.get("holding");
-        if (this.holdingParam != null) {
-
+        if (this.holdingParam != null) { 
             this.id = this.holdingParam['id'];
             this.cryptoCode = this.holdingParam['crypto'];
             this.displayCurrency = this.holdingParam['currency'];

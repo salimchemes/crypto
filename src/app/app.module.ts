@@ -10,6 +10,8 @@ import { MyApp } from './app.component';
 import { HoldingsProvider } from '../providers/holdings/holdings';
 import { HelperProvider } from '../providers/helper/helper';
 import { LoadingProvider } from '../providers/loading/loading';
+import { ConnectivityProvider } from '../providers/connectivity/connectivity';
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -29,11 +31,13 @@ import { LoadingProvider } from '../providers/loading/loading';
   ],
   providers: [
     StatusBar,
+    Network,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HoldingsProvider,
     HelperProvider,
-    LoadingProvider
+    LoadingProvider,
+    ConnectivityProvider
   ]
 })
 export class AppModule {}
