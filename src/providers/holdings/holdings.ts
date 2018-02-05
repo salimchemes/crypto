@@ -23,9 +23,12 @@ export class HoldingsProvider {
     }
 
     addHolding(holding: Holding): void {
+
+        console.log(this.holdings);
+
         if (holding.isUpdate)
             this.holdings.forEach(x => {
-                if (x.id = holding.id) {
+                if (x.id == holding.id) {
                     x.crypto = holding.crypto,
                         x.currency = holding.currency,
                         x.value = holding.value,
@@ -34,6 +37,7 @@ export class HoldingsProvider {
             })
         else
             this.holdings.push(holding);
+
         this.fetchPrices();
         this.saveHoldings();
 
@@ -52,7 +56,6 @@ export class HoldingsProvider {
     }
 
     loadHoldings(): void {
-
         this.storage.get('cryptoHoldings').then(holdings => {
             if (holdings !== null) {
                 this.holdings = holdings;

@@ -21,6 +21,7 @@ export class AddHoldingPage {
     private amountHolding;
     private actionText: string = 'Add Holding';
     private isUpdate: boolean = false;
+    private holdingParam = [];
 
     constructor(private navCtrl: NavController,
         private holdingsProvider: HoldingsProvider,
@@ -28,12 +29,13 @@ export class AddHoldingPage {
         public navParams: NavParams,
         private loading: LoadingProvider) {
         this.loading.show('Loading...');
-        let holdingParam = this.navParams.get("holding");
-        if (holdingParam != null) {
-            this.id = holdingParam.id;
-            this.cryptoCode = holdingParam.crypto;
-            this.displayCurrency = holdingParam.currency;
-            this.amountHolding = holdingParam.amount;
+        this.holdingParam = this.navParams.get("holding");
+        if (this.holdingParam != null) {
+
+            this.id = this.holdingParam['id'];
+            this.cryptoCode = this.holdingParam['crypto'];
+            this.displayCurrency = this.holdingParam['currency'];
+            this.amountHolding = this.holdingParam['amount'];
             this.actionText = 'Update Holding';
             this.isUpdate = true;
         }
@@ -47,12 +49,12 @@ export class AddHoldingPage {
 
         let holding = {
             isUpdate: this.isUpdate,
-            id: this.id ? this.id : this.helper.newGuid(),
+            id: this.isUpdate? this.holdingParam['id'] : this.helper.newGuid(),
             crypto: this.cryptoCode,
             currency: this.displayCurrency,
             amount: this.amountHolding || 0
         };
-
+        console.log(holding);
         this.holdingsProvider.verifyHolding(holding).subscribe((result) => {
 
             this.checkingValidity = false;
