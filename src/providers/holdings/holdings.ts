@@ -43,8 +43,8 @@ export class HoldingsProvider {
 
     }
 
-    removeHolding(holding): void {
-
+    removeHolding(holding, item): void {
+        item.close();
         this.holdings.splice(this.holdings.indexOf(holding), 1);
         this.fetchPrices();
         this.saveHoldings();

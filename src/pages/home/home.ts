@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, Platform } from 'ionic-angular';
 import { HoldingsProvider } from '../../providers/holdings/holdings';
-import { LoadingProvider } from '../../providers/loading/loading';
-import { Network } from '@ionic-native/network';
-
+import { LoadingProvider } from '../../providers/loading/loading'; 
 import { ConnectivityProvider } from '../../providers/connectivity/connectivity';
 @IonicPage()
 @Component({
@@ -11,17 +9,14 @@ import { ConnectivityProvider } from '../../providers/connectivity/connectivity'
     templateUrl: 'home.html'
 })
 export class HomePage {
-    public IsOffline: boolean = false;
-
+    public IsOffline: boolean = false; 
     constructor(private navCtrl: NavController,
         private holdingsProvider: HoldingsProvider,
         private loading: LoadingProvider,
         private platform: Platform,
-        private network: Network,
         private connectivity: ConnectivityProvider) {
 
-    }
-
+    } 
 
     ionViewDidLoad(): void {
         this.platform.ready().then(() => {
@@ -59,13 +54,13 @@ export class HomePage {
         console.log(holding);
     }
 
-    viewChart(holding) {
+    viewChart(holding, item) {
+        item.close(); 
         if (this.checkIfOffline())
             return
         this.navCtrl.push('ChartPage', { holding: holding });
-    }
-
-
+    } 
+ 
     checkIfOffline() {
         if (this.connectivity.isOffline()) {
             this.IsOffline = true;
